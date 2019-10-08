@@ -22,6 +22,10 @@ function reset(){
 
 console.log(guessingWord);
 $("#spaces").text(spaces.join(" "));
+$("#guesses-left").text("Guesses left: " + guessesLeft)
+$("#win").text("Wins: "+ wins)
+$("#lose").text("Losses: " + losses)
+
 
 // reads user input for guess
 document.onkeyup = function (event) {
@@ -31,14 +35,15 @@ document.onkeyup = function (event) {
     if (usedLetters.indexOf(userGuess) === -1) {
         usedLetters.push(userGuess);
         $("#used-letters").text(usedLetters);
-        guessesLeft--;
-        $("#guesses-left").text(guessesLeft);
+        // guessesLeft--;
+        // $("#guesses-left").text(guessesLeft);
             if(guessesLeft === 0){
                 alert("You lost.  Idiot");
                 losses++;
+                $("#lose").text("Losses: " + lose)
                 reset();
             }
-    }
+    } 
     else{
         alert("You already used that letter!")
     }
@@ -49,13 +54,21 @@ document.onkeyup = function (event) {
             if (guessingWord[i] === userGuess) {
                 spaces[i] = userGuess;
                 $("#spaces").text(spaces.join(" "));
-                    if(spaces === guessingWord){
+                    if(spaces.join("") === guessingWord){
                         alert("YOU WIN!")
-                        win++
-                        $("#win").text("Wins: "+win)
+                        wins++
+                        $("#win").text("Wins: "+ wins)
                     }
             }
         }
     }
+    else {
+        guessesLeft--;
+        $("#guesses-left").text(guessesLeft);
+    }
 
 }
+
+$(".reset").click(function(){
+    reset();
+})
